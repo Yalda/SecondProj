@@ -1,5 +1,6 @@
 import inputdata
 import numpy
+import pdb; pdb.set_trace()
 
 data = inputdata.raw_scores
 
@@ -13,7 +14,7 @@ class elements(object):
   def __init__(self):
     self.people = []
     self.papers = []
-    self.ratings = [[]]
+    
 
     ''' fill people[] '''
     for person,ratings in data.iteritems():
@@ -29,13 +30,23 @@ class elements(object):
         if newPaper:
           self.papers.append(paper)
 
+    
+    self.ratings = numpy.zeros([len(self.people),len(self.papers)])
     '''fill ratings'''
-    for person,readPapers in data.iteritems():
-      for paper,rate in readPapers.iteritems():
+    for person in self.people:
+      for paper in self.papers:
+        ''' find match in dictionary '''
+	for personInData,readPapers in data.iteritems():
+	  for paperInData,rate in readPapers.iteritems():
+	    if person == personInData and paper == paperInData:
+	      i = self.people.index(person)
+              j = self.papers.index(paper)
+		
+	      self.ratings[i][j] = rate
 
-
-    self.ratings[0].append(0)
     print self.ratings
+
+
 
     
 
