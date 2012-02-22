@@ -1,26 +1,28 @@
 import inputdata
 import numpy
-import pdb; pdb.set_trace()
+'''import pdb; pdb.set_trace()'''
 
 data = inputdata.raw_scores
 
 
 def main():
   newElements = elements()
+  print newElements.ratings
+  print newElements.similarities
 
 
 class elements(object):
-  ''' I am all elements needed for recommendation :) ''' 
+  #I am all elements needed for recommendation :) 
   def __init__(self):
     self.people = []
     self.papers = []
     
 
-    ''' fill people[] '''
+    #fill people[]
     for person,ratings in data.iteritems():
       self.people.append(person)
 
-    ''' fill papers[] '''
+    #fill papers[]
     for person,readPapers in data.iteritems():
       for paper,rate in readPapers.iteritems():
         newPaper = True       
@@ -31,11 +33,11 @@ class elements(object):
           self.papers.append(paper)
 
     
+    #fill ratings
     self.ratings = numpy.zeros([len(self.people),len(self.papers)])
-    '''fill ratings'''
     for person in self.people:
       for paper in self.papers:
-        ''' find match in dictionary '''
+        #find match in dictionary
 	for personInData,readPapers in data.iteritems():
 	  for paperInData,rate in readPapers.iteritems():
 	    if person == personInData and paper == paperInData:
@@ -44,22 +46,30 @@ class elements(object):
 		
 	      self.ratings[i][j] = rate
 
-    print self.ratings
+
+    #fill similarity norms
+    self.similarities = numpy.zeros([len(self.people),len(self.people)])    
+    i=0
+    for person in self.people:
+      j=0
+      for preson in self.people:
+        self.similarities[i][j] = self.norm_finder(self.ratings[i],self.ratings[j])
+	j+= 1
+      i+= 1
 
 
-    ''' I'm finding similarity between each 2 people '''
-    self.similarity = numpy.zeros([len(self.people),len(self.people)])
-    i = 0
-    j = 0
-    for row in self.ratings:
-      for row in self.ratings:
-        vector = abs(ratings[i] - ratings[j])
-        j +=1
-      i += 1
-        
-        
-      index +=1
-     
+
+
+
+#------------------------------------------------------------------
+
+   
+  def norm_finder(self,v1,v2):
+    return numpy.linalg.norm(v1-v2)
+
+
+
+
       
 
 main()
