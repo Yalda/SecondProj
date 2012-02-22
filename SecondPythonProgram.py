@@ -66,7 +66,8 @@ class elements(object):
 
   #------------------------- pearson correlation------------------------------------  
   def pearson_finder(self,v1,v2):
-    return scipy.stats.pearsonr(v1,v2)
+    return scipy.stats.pearsonr(v1,v2)[0]
+
       
 
 main()
