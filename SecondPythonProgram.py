@@ -47,9 +47,20 @@ class elements(object):
     print self.ratings
 
 
-
-    
-
+    ''' I'm finding similarity between each 2 people '''
+    self.similarity = numpy.zeros([len(self.people),len(self.people)])
+    i = 0
+    j = 0
+    for row in self.ratings:
+      for row in self.ratings:
+        vector = abs(ratings[i] - ratings[j])
+        j +=1
+      i += 1
+        
+        
+      index +=1
+     
+      
 
 main()
 
